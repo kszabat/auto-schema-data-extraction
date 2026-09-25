@@ -28,8 +28,8 @@ class Settings(BaseSettings):
     )
 
     use_same_model: bool = False
-    gen_model: ModelConfig = Field(default_factory=ModelConfig)
-    extr_model: ModelConfig = Field(default_factory=ModelConfig)
+    schema_model: ModelConfig = Field(default_factory=ModelConfig)
+    extraction_model: ModelConfig = Field(default_factory=ModelConfig)
 
     output_dir: Path = _PROJECT_ROOT / "output"
 
@@ -45,7 +45,7 @@ class Settings(BaseSettings):
     @model_validator(mode="after")
     def sync_extr_model(self):
         if self.use_same_model:
-            self.extr_model = self.gen_model.model_copy()
+            self.extraction_model = self.schema_model.model_copy()
         return self
 
 
