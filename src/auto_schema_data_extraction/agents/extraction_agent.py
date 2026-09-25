@@ -1,7 +1,6 @@
-from typing import TypeVar
-
 from pydantic import BaseModel
 from pydantic_ai.agent import Agent, AgentRetries, AgentRunResult
+from pydantic_ai.messages import BinaryContent
 from pydantic_ai.models import Model
 
 INSTRUCTIONS = """\
@@ -33,6 +32,7 @@ def build_extraction_agent[OutputModelT: BaseModel](
 
 
 async def extract_from_document[OutputModelT: BaseModel](
-    document_text: str, *, agent: Agent[None, OutputModelT]
+    content: str | BinaryContent, *, agent: Agent[None, OutputModelT]
 ) -> AgentRunResult[OutputModelT]:
-    return await agent.run(document_text)
+    user_prompt = content if isinstance(content, str) else [content]
+    return await agent.run(user_prompt) 
