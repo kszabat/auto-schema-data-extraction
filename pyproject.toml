@@ -12,6 +12,7 @@ dependencies = [
     "pydantic-ai>=2.50.0",
     "pydantic-settings>=2.15.0",
     "python-dotenv>=1.2.3",
+    "typer>=0.27.2",
 ]
 
 [project.scripts]
