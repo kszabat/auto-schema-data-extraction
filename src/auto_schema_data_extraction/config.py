@@ -1,13 +1,15 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator, ConfigDict
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 class LLMModelConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    
     name: str = "gemini-3-flash-preview"
     api_key: str | None = None
 
