@@ -1,12 +1,9 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
-from pydantic_ai.models import Model
-from pydantic_ai.models.google import GoogleModel
-from pydantic_ai.providers.google import GoogleProvider
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
@@ -47,6 +44,8 @@ class Settings(BaseSettings):
 
     output_dir: Path = _PROJECT_ROOT / "output"
     templates_dir: Path = _PROJECT_ROOT / "templates"
+
+    extraction_mode: Literal["text", "multimodal"] = "text"
 
     @field_validator("output_dir", "templates_dir")
     @classmethod
