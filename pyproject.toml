@@ -8,13 +8,13 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
-    "docling>=1.9.0",
+    "docling>=2.0.0",
     "pydantic>=2.13.5",
     "pydantic-ai>=2.50.0",
     "pydantic-settings>=2.15.0",
     "python-dotenv>=1.2.3",
     "rich>=15.0.0",
-    "typer>=0.27.2",
+    "typer<0.27.0",
 ]
 
 [project.scripts]
