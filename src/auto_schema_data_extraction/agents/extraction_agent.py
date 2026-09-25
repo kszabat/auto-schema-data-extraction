@@ -1,7 +1,7 @@
 from typing import TypeVar
 
 from pydantic import BaseModel
-from pydantic_ai.agent import Agent, AgentRunResult, AgentRetries
+from pydantic_ai.agent import Agent, AgentRetries, AgentRunResult
 from pydantic_ai.models import Model
 
 INSTRUCTIONS = """\
