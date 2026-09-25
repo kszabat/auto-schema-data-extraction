@@ -11,6 +11,14 @@ from pydantic_ai.providers.google import GoogleProvider
 _PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
+def _resolve_and_ensure_dir(v: Path) -> Path:
+    v = v.expanduser().resolve()
+    if v.exists() and not v.is_dir():
+        raise ValueError(f"{v} already exists as a file, expected a directory.")
+    v.mkdir(parents=True, exist_ok=True)
+    return v
+
+
 class LLMModelConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -23,6 +31,7 @@ class LLMModelConfig(BaseModel):
         if isinstance(v, str) and "/" in v:
             return v.replace("/", ":", 1)
         return v
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -37,15 +46,12 @@ class Settings(BaseSettings):
     extraction_model: LLMModelConfig = Field(default_factory=LLMModelConfig)
 
     output_dir: Path = _PROJECT_ROOT / "output"
+    templates_dir: Path = _PROJECT_ROOT / "templates"
 
-    @field_validator("output_dir")
+    @field_validator("output_dir", "templates_dir")
     @classmethod
-    def validate_output_dir(cls, v: Path) -> Path:
-        v = v.expanduser().resolve()
-        if v.exists() and not v.is_dir():
-            raise ValueError(f"output_dir already exists as a file: {v}")
-        v.mkdir(parents=True, exist_ok=True)
-        return v
+    def validate_dirs(cls, v: Path) -> Path:
+        return _resolve_and_ensure_dir(v)
 
     @model_validator(mode="after")
     def sync_extr_model(self):
