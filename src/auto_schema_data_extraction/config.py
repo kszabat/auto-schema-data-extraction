@@ -31,6 +31,16 @@ class Settings(BaseSettings):
     gen_model: ModelConfig = ModelConfig()
     extr_model: ModelConfig = ModelConfig()
 
+    output_dir: Path = _PROJECT_ROOT / "output"
+
+    @field_validator("output_dir")
+    @classmethod
+    def validate_output_dir(cls, v: Path) -> Path:
+        v = v.expanduser().resolve()
+        if v.exists() and not v.is_dir():
+            raise ValueError(f"output_dir already exists as a file: {v}")
+        return v
+
     @model_validator(mode="after")
     def sync_extr_model(self):
         if self.use_same_model:
