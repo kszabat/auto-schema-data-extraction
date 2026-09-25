@@ -1,7 +1,7 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import BaseModel, field_validator, model_validator
+from pydantic import BaseModel, field_validator, model_validator, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -28,8 +28,8 @@ class Settings(BaseSettings):
     )
 
     use_same_model: bool = False
-    gen_model: ModelConfig = ModelConfig()
-    extr_model: ModelConfig = ModelConfig()
+    gen_model: ModelConfig = Field(default_factory=ModelConfig)
+    extr_model: ModelConfig = Field(default_factory=ModelConfig)
 
     output_dir: Path = _PROJECT_ROOT / "output"
 
@@ -39,6 +39,7 @@ class Settings(BaseSettings):
         v = v.expanduser().resolve()
         if v.exists() and not v.is_dir():
             raise ValueError(f"output_dir already exists as a file: {v}")
+        v.mkdir(parents=True, exist_ok=True)
         return v
 
     @model_validator(mode="after")
