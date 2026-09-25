@@ -1,0 +1,22 @@
+[project]
+name = "auto-schema-data-extraction"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "kszabat", email = "krystian.szabat@outlook.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.13.5",
+    "pydantic-ai>=2.50.0",
+    "pydantic-settings>=2.15.0",
+    "python-dotenv>=1.2.3",
+]
+
+[project.scripts]
+auto-schema-data-extraction = "auto_schema_data_extraction:main"
+
+[build-system]
+requires = ["uv_build>=0.12.1,<0.13.0"]
+build-backend = "uv_build"
