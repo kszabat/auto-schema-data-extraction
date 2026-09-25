@@ -1,16 +1,20 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import BaseModel, Field, field_validator, model_validator, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+from pydantic_ai.models import Model
+from pydantic_ai.models.google import GoogleModel
+from pydantic_ai.providers.google import GoogleProvider
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 class LLMModelConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    
-    name: str = "gemini-3-flash-preview"
+
+    name: str = "google:gemini-3-flash-preview"
     api_key: str | None = None
 
     @field_validator("name", mode="before")
@@ -19,7 +23,6 @@ class LLMModelConfig(BaseModel):
         if isinstance(v, str) and "/" in v:
             return v.replace("/", ":", 1)
         return v
-
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -54,3 +57,8 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
+
+
+if __name__ == "__main__":
+    settings = get_settings()
+    print(settings.model_dump_json(indent=2))
