@@ -6,7 +6,7 @@ from pydantic_ai.models import Model
 
 from auto_schema_data_extraction.schema.meta_models import TemplateSpec
 
-SYSTEM_PROMPT = """\
+INSTRUCTIONS = """\
 Jesteś asystentem, który na podstawie opisu użytkownika w języku naturalnym \
 tworzy specyfikację szablonu do ekstrakcji danych z dokumentów.
 
@@ -34,8 +34,8 @@ def build_schema_agent(model: Model) -> Agent[None, TemplateSpec]:
     return Agent(
         model,
         output_type=TemplateSpec,
-        system_prompt=SYSTEM_PROMPT,
         retries=retries,
+        instructions=INSTRUCTIONS
     )
 
 
