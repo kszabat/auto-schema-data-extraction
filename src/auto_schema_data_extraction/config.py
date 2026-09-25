@@ -1,13 +1,13 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import BaseModel, field_validator, model_validator, Field
+from pydantic import BaseModel, Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
-class ModelConfig(BaseModel):
+class LLMModelConfig(BaseModel):
     name: str = "gemini-3-flash-preview"
     api_key: str | None = None
 
@@ -28,8 +28,8 @@ class Settings(BaseSettings):
     )
 
     use_same_model: bool = False
-    schema_model: ModelConfig = Field(default_factory=ModelConfig)
-    extraction_model: ModelConfig = Field(default_factory=ModelConfig)
+    schema_model: LLMModelConfig = Field(default_factory=LLMModelConfig)
+    extraction_model: LLMModelConfig = Field(default_factory=LLMModelConfig)
 
     output_dir: Path = _PROJECT_ROOT / "output"
 
