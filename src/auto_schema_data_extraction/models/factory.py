@@ -2,10 +2,10 @@ from pydantic_ai.models import Model
 from pydantic_ai.models.google import GoogleModel
 from pydantic_ai.providers.google import GoogleProvider
 
-from auto_schema_data_extraction.config import LLMModelConfig
+from auto_schema_data_extraction.config import LLModelConfig
 
 
-def build_model(config: LLMModelConfig) -> Model:
+def build_model(config: LLModelConfig) -> Model:
     provider_prefix, _, model_name = config.name.partition(":")
 
     match provider_prefix:
