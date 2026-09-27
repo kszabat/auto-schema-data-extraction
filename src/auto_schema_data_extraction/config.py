@@ -30,6 +30,9 @@ class LLModelConfig(BaseModel):
         return v
 
 
+ExtractionMode = Literal["text", "multimodal"]
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=_PROJECT_ROOT / ".env",
@@ -39,13 +42,13 @@ class Settings(BaseSettings):
     )
 
     use_same_model: bool = False
-    schema_model: LLMModelConfig = Field(default_factory=LLMModelConfig)
-    extraction_model: LLMModelConfig = Field(default_factory=LLMModelConfig)
+    schema_model: LLModelConfig = Field(default_factory=LLModelConfig)
+    extraction_model: LLModelConfig = Field(default_factory=LLModelConfig)
 
     output_dir: Path = _PROJECT_ROOT / "output"
     templates_dir: Path = _PROJECT_ROOT / "templates"
 
-    extraction_mode: Literal["text", "multimodal"] = "text"
+    extraction_mode: ExtractionMode = "text"
 
     @field_validator("output_dir", "templates_dir")
     @classmethod
