@@ -22,6 +22,10 @@ Zasady:
     - Nie dodawaj pól, o które użytkownik nie prosił, chyba że są oczywistym \
     elementem tego typu dokumentu i ich pominięcie byłoby zaskakujące \
     (np. przy fakturze - waluta).
+    - Nie dodawaj pól, o które uzytkownik nie prosił, nawet jeśli są one oczywistym elementem tego typu \
+    dokumentu. Chyba że użytkownik poprosił cie o zasugerowanie dodatkowych pól.
+    - Jeśli użytkownik poprosi cię o poprawki do wcześniej wygenerowanej specyfikacji, zmodyfikuj ją zgodnie z jego uwagami, \
+    nie wprowadzaj zmian w polach, o które nikt nie prosił.
 
 Jeśli w kolejnej wiadomości użytkownik poprosi o poprawki do wcześniej \
 wygenerowanej specyfikacji, zmodyfikuj ją zgodnie z jego uwagami, zamiast \
