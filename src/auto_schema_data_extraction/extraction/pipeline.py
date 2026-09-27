@@ -1,13 +1,18 @@
-from auto_schema_data_extraction.documents.loader import load_document
 from dataclasses import dataclass
-from pydantic import BaseModel
 from pathlib import Path
-from auto_schema_data_extraction.schema.meta_models import TemplateSpec
-from auto_schema_data_extraction.config import LLModelConfig, ExtractionMode
-from auto_schema_data_extraction.schema.builder import build_model as build_output_model
-from auto_schema_data_extraction.models.factory import build_model as build_llm_model
-from auto_schema_data_extraction.agents.extraction_agent import build_extraction_agent, extract_from_document
+
+from pydantic import BaseModel
+
+from auto_schema_data_extraction.agents.extraction_agent import (
+    build_extraction_agent,
+    extract_from_document,
+)
+from auto_schema_data_extraction.config import ExtractionMode, LLModelConfig
+from auto_schema_data_extraction.documents.loader import load_document
 from auto_schema_data_extraction.documents.models import ExtractedText
+from auto_schema_data_extraction.models.factory import build_model as build_llm_model
+from auto_schema_data_extraction.schema.builder import build_model as build_output_model
+from auto_schema_data_extraction.schema.meta_models import TemplateSpec
 
 
 @dataclass(frozen=True, slots=True)
