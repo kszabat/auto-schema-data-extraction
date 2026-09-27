@@ -16,7 +16,7 @@ def _resolve_and_ensure_dir(v: Path) -> Path:
     return v
 
 
-class LLMModelConfig(BaseModel):
+class LLModelConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     name: str = "google:gemini-3-flash-preview"
