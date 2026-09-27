@@ -1,6 +1,6 @@
 from collections.abc import Sequence
 
-from pydantic_ai import Agent, AgentRetries
+from pydantic_ai.agent import Agent, AgentRetries, AgentRunResult
 from pydantic_ai.messages import ModelMessage
 from pydantic_ai.models import Model
 
@@ -32,10 +32,7 @@ tworzyć ją od nowa - zachowaj pola, o których zmianę nikt nie prosił.
 def build_schema_agent(model: Model) -> Agent[None, TemplateSpec]:
     retries: AgentRetries = {"output": 3}
     return Agent(
-        model,
-        output_type=TemplateSpec,
-        retries=retries,
-        instructions=INSTRUCTIONS
+        model, output_type=TemplateSpec, retries=retries, instructions=INSTRUCTIONS
     )
 
 
@@ -44,5 +41,5 @@ async def generate_template_spec(
     *,
     agent: Agent[None, TemplateSpec],
     message_history: Sequence[ModelMessage] | None = None,
-) -> TemplateSpec:
+) -> AgentRunResult[TemplateSpec]:
     return await agent.run(user_prompt, message_history=message_history)
